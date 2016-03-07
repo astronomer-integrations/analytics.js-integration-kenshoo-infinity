@@ -4,6 +4,7 @@
   "author": "Segment <friends@segment.com>",
   "license": "MIT",
   "main": "lib/index.js",
+  "version": "0.0.1",
   "scripts": {
     "test": "make test"
   },
