@@ -20,7 +20,7 @@
   },
   "homepage": "https://segment.com/docs/integrations/blueshift/",
   "dependencies": {
-    "lodash": "^4.6.1"
+    "lodash.omit": "^4.1.0"
   },
   "devDependencies": {
     "duo": "0.12.x",
