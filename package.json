@@ -1,7 +1,7 @@
 {
   "name": "analytics.js-integration-blueshift",
   "description": "The Blueshift analytics.js integration.",
-  "author": "Segment <friends@segment.com>",
+  "author": "alois@astronomer.io",
   "license": "MIT",
   "main": "lib/index.js",
   "version": "0.0.1",
@@ -13,15 +13,14 @@
     "npm": ">=2.7.0"
   },
   "repository": {
-    "url": "https://github.com/segment-integrations/analytics.js-integration-blueshift.git",
+    "url": "",
     "type": "git"
   },
   "bugs": {
-    "url": "https://github.com/segment-integrations/analytics.js-integration-blueshift/issues"
+    "url": ""
   },
-  "homepage": "https://segment.com/docs/integrations/blueshift/",
+  "homepage": "",
   "dependencies": {
-    "lodash.omit": "^4.1.0"
   },
   "devDependencies": {
     "duo": "0.12.x",

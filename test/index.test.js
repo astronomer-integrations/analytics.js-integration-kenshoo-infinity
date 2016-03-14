@@ -4,181 +4,45 @@ var Analytics = require('analytics.js-core').constructor;
 var integration = require('analytics.js-integration');
 var sandbox = require('clear-env');
 var tester = require('analytics.js-integration-tester');
-var Kenshoo = require('../lib/');
+var Kenshoo = require('../lib');
 
-describe('Blueshift', function() {
-  var analytics;
-  var bsft;
-  var options = {
-    apiKey: 'x',
-    retarget: false
-  };
+describe('Kenshoo', function () {
+    var analytics;
+    var kenshoo;
+    var options = {
+        serverId: '1234',
+        cid: 'mycid'
+    };
 
-  beforeEach(function() {
-    analytics = new Analytics();
-    bsft = new Blueshift(options);
-    analytics.use(Blueshift);
-    analytics.use(tester);
-    analytics.add(bsft);
-  });
-
-  afterEach(function() {
-    analytics.restore();
-    analytics.reset();
-    bsft.reset();
-    sandbox();
-  });
-
-  it('should have the right settings', function() {
-    analytics.compare(Blueshift, integration('Blueshift')
-      .global('blueshift')
-      .global('_blueshiftid', ''));
-  });
-
-  describe('before loading', function() {
-    beforeEach(function() {
-      analytics.stub(bsft, 'load');
+    beforeEach(function () {
+        analytics = new Analytics;
+        kenshoo = new Kenshoo(options);
+        analytics.use(Kenshoo);
+        analytics.use(tester);
+        analytics.add(kenshoo);
     });
 
-    describe('#initialize', function() {
-      it('should create the window.blueshift object', function() {
-        analytics.assert(!window.blueshift);
-        analytics.initialize();
-        analytics.page();
-        analytics.assert(window.blueshift);
-      });
-
-      it('should call #load', function() {
-        analytics.initialize();
-        analytics.page();
-        analytics.called(bsft.load);
-      });
-    });
-  });
-
-  describe('loading', function() {
-    it('should load', function(done) {
-      analytics.load(bsft, done);
-    });
-  });
-
-  describe('after loading', function() {
-    beforeEach(function(done) {
-      analytics.once('ready', done);
-      analytics.initialize();
-      analytics.page();
+    afterEach(function () {
+        analytics.restore();
+        analytics.reset();
+        kenshoo.reset();
+        sandbox();
     });
 
-    describe('#page', function() {
-      beforeEach(function() {
-        analytics.stub(window.blueshift, 'retarget');
-        analytics.stub(window.blueshift, 'pageload');
-      });
+    describe('after loading', function () {
+        beforeEach(function (done) {
+            analytics.once('ready', done);
+            analytics.initialize();
+        });
 
-      it('should track all pages', function() {
-        analytics.page('Category', 'Page Name');
-        analytics.didNotCall(window.blueshift.retarget);
-        analytics.called(window.blueshift.pageload);
-      });
-
-      it('should call retarget on page event, if enabled', function() {
-        bsft.options.retarget = true;
-        analytics.page('Category', 'Page Name');
-        analytics.called(window.blueshift.retarget);
-        analytics.called(window.blueshift.pageload);
-      });
+        it('should call trackConversion', function () {
+            analytics.stub(window.kenshoo, 'trackConversion');
+            analytics.track('my event', {
+                hello: 'hello world',
+                orderId: '1234',
+                revenue: 'millions of dollars'
+            });
+            analytics.called(window.kenshoo.trackConversion, '1234', 'mycid', {conversionType: encodeURIComponent('my event'), hello: encodeURIComponent('hello world'), orderId: encodeURIComponent('1234'), revenue: encodeURIComponent('millions of dollars'), currency: 'USD'});
+        });
     });
-
-    describe('#identify', function() {
-      beforeEach(function() {
-        analytics.stub(window.blueshift, 'identify');
-      });
-
-      it('should send anonymousId', function() {
-        analytics.identify();
-        analytics.called(window.blueshift.identify, {
-          _bsft_source: 'segment.com',
-          anonymousId: analytics.user().anonymousId()
-        });
-      });
-
-      it('should send id', function() {
-        analytics.identify('id');
-        analytics.called(window.blueshift.identify, {
-          id: 'id',
-          customer_id: 'id',
-          _bsft_source: 'segment.com',
-          anonymousId: analytics.user().anonymousId()
-        });
-      });
-
-      it('should send traits', function() {
-        analytics.identify({ trait: true, firstName: 'han', lastName: 'kim' });
-        analytics.called(window.blueshift.identify, {
-          trait: true,
-          firstname: 'han',
-          lastname: 'kim',
-          _bsft_source: 'segment.com',
-          anonymousId: analytics.user().anonymousId()
-        });
-      });
-    });
-
-    describe('#track', function() {
-      beforeEach(function() {
-        analytics.stub(window.blueshift, 'track');
-      });
-
-      it('should send an event', function() {
-        analytics.track('event');
-        analytics.called(window.blueshift.track, 'event', {
-          _bsft_source: 'segment.com',
-          anonymousId: analytics.user().anonymousId()
-        });
-      });
-      it('should send an event with properties', function() {
-        analytics.track('event', { property: true });
-        analytics.called(window.blueshift.track, 'event', {
-          _bsft_source: 'segment.com',
-          anonymousId: analytics.user().anonymousId(),
-          property: true
-        });
-      });
-      it('should send an event with customer_id', function() {
-        analytics.identify('123');
-        analytics.track('event');
-        analytics.called(window.blueshift.track, 'event', {
-          _bsft_source: 'segment.com',
-          customer_id: '123',
-          anonymousId: analytics.user().anonymousId()
-        });
-      });
-    });
-
-    describe('#alias', function() {
-      beforeEach(function() {
-        analytics.stub(window.blueshift, 'track');
-        analytics.stub(window.blueshift, 'alias');
-      });
-
-      it('should send new id', function() {
-        analytics.alias('new');
-        analytics.called(window.blueshift.track, 'alias', {
-          _bsft_source: 'segment.com',
-          customer_id: 'new',
-          anonymousId: analytics.user().anonymousId()
-        });
-      });
-
-      it('should send new & old id', function() {
-        analytics.alias('new', 'old');
-        analytics.called(window.blueshift.track, 'alias', {
-          _bsft_source: 'segment.com',
-          customer_id: 'new',
-          previous_customer_id: 'old',
-          anonymousId: analytics.user().anonymousId()
-        });
-      });
-    });
-  });
 });
