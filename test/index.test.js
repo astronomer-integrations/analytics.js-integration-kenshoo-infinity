@@ -40,9 +40,9 @@ describe('Kenshoo', function () {
             analytics.track('my event', {
                 hello: 'hello world',
                 orderId: '1234',
-                revenue: 'millions of dollars'
+                revenue: 44
             });
-            analytics.called(window.kenshoo.trackConversion, '1234', 'mycid', {conversionType: encodeURIComponent('my event'), hello: encodeURIComponent('hello world'), orderId: encodeURIComponent('1234'), revenue: encodeURIComponent('millions of dollars'), currency: 'USD'});
+            analytics.called(window.kenshoo.trackConversion, '1234', 'mycid', {conversionType: encodeURIComponent('my event'), hello: encodeURIComponent('hello world'), orderId: encodeURIComponent('1234'), revenue: 44, currency: 'USD'});
         });
     });
 });
