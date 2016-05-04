@@ -42,7 +42,7 @@ describe('Kenshoo', function () {
                 orderId: '1234',
                 revenue: 44
             });
-            analytics.called(window.kenshoo.trackConversion, '1234', 'mycid', {conversionType: encodeURIComponent('my event'), hello: encodeURIComponent('hello world'), orderId: encodeURIComponent('1234'), revenue: 44, currency: 'USD'});
+            analytics.called(window.kenshoo.trackConversion, '1234', 'mycid', {conversionType: 'my_event', hello: 'hello_world', orderId: '1234', revenue: 44, currency: 'USD'});
         });
     });
 });
