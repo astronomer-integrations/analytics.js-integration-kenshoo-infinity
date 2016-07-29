@@ -1,6 +1,6 @@
 {
-  "name": "analytics.js-integration-blueshift",
-  "description": "The Blueshift analytics.js integration.",
+  "name": "astronomerio/analytics.js-integration-kenshoo-infinity",
+  "description": "The Kenshoo Infinity analytics.js integration.",
   "author": "alois@astronomer.io",
   "license": "MIT",
   "main": "lib/index.js",
