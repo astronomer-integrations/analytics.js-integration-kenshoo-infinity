@@ -1,5 +1,5 @@
 {
-  "name": "astronomerio/analytics.js-integration-kenshoo-infinity",
+  "name": "@astronomerio/analytics.js-integration-kenshoo-infinity",
   "description": "The Kenshoo Infinity analytics.js integration.",
   "author": "alois@astronomer.io",
   "license": "MIT",
