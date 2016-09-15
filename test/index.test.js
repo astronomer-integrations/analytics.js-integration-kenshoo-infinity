@@ -1,9 +1,9 @@
 'use strict';
 
-var Analytics = require('analytics.js-core').constructor;
-var integration = require('analytics.js-integration');
-var sandbox = require('clear-env');
-var tester = require('analytics.js-integration-tester');
+var Analytics = require('@segment/analytics.js-core').constructor;
+var integration = require('@segment/analytics.js-integration');
+var sandbox = require('@segment/clear-env');
+var tester = require('@segment/analytics.js-integration-tester');
 var Kenshoo = require('../lib');
 
 describe('Kenshoo', function () {
@@ -42,7 +42,7 @@ describe('Kenshoo', function () {
                 orderId: '1234',
                 revenue: 44
             });
-            analytics.called(window.kenshoo.trackConversion, '1234', 'mycid', {conversionType: 'my_event', hello: 'hello_world', orderId: '1234', revenue: 44, currency: 'USD'});
+            analytics.called(window.kenshoo.trackConversion, '1234', 'mycid', {conversionType: 'my_event', hello: 'hello_world', orderId: '1234', revenue: 44, currency: 'usd'});
         });
     });
 });
