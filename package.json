@@ -4,7 +4,7 @@
   "author": "alois@astronomer.io",
   "license": "MIT",
   "main": "lib/index.js",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "scripts": {
     "test": "make test"
   },
@@ -21,11 +21,10 @@
   },
   "homepage": "",
   "dependencies": {
-    "@segment/analytics.js-integration": "^3.1.0",
-    "mocha-phantomjs": "github:segmentio/mocha-phantomjs"
+    "@astronomerio/analytics.js-integration": "github:astronomerio/analytics.js-integration#3.1.0"
   },
   "devDependencies": {
-    "@astronomerio/analytics.js-core": "github:astronomerio/analytics.js-core",
+    "@astronomerio/analytics.js-core": "github:astronomerio/analytics.js-core#3.0.0",
     "@segment/analytics.js-integration-tester": "^2.0.0",
     "@segment/clear-env": "^2.0.1",
     "@segment/eslint-config": "^3.1.1",
@@ -46,6 +45,7 @@
     "karma-sauce-launcher": "^1.0.0",
     "karma-spec-reporter": "0.0.26",
     "mocha": "^2.5.3",
+    "mocha-phantomjs": "github:segmentio/mocha-phantomjs",
     "npm-check": "^5.2.2",
     "phantomjs-prebuilt": "^2.1.8",
     "watchify": "^3.7.0"
